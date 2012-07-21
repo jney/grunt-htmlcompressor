@@ -1,0 +1,40 @@
+{
+  "name": "grunt-htmlcompressor",
+  "description": "compress html with grunt and htmlcompressor",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jney/grunt-htmlcompressor",
+  "author": {
+    "name": "Jean-Sébastien Ney",
+    "url": "http://github.com/jney/htmlcompressor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jney/grunt-htmlcompressor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jney/grunt-htmlcompressor/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jney/grunt-htmlcompressor/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "grunt.js",
+  "bin": "bin/grunt-htmlcompressor",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "grunt --base ./test/ --config ./test/grunt.js"
+  },
+  "dependencies": {
+    "grunt": "~0.3.10"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.10"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
