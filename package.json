@@ -32,7 +32,8 @@
     "grunt": "~0.3.10"
   },
   "devDependencies": {
-    "grunt": "~0.3.10"
+    "grunt": "~0.3.10",
+    "grunt-contrib": "~0.1.7"
   },
   "keywords": [
     "gruntplugin"

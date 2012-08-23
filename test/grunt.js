@@ -34,7 +34,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib');
+  grunt.loadTasks('../node_modules/grunt-contrib/tasks');
   grunt.loadTasks('../tasks');
   grunt.registerTask('default', 'clean htmlcompressor test:tasks');
 };
