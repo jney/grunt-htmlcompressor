@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/jney/grunt-htmlcompressor.png)](http://travis-ci.org/jney/grunt-htmlcompressor)
 # grunt-htmlcompressor
 
 [Grunt][grunt] plugin for html compression, using [htmlcompressor][htmlcompressor].
