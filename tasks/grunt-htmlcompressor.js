@@ -58,7 +58,7 @@ module.exports = function(grunt) {
       args: args
     }, function(err, output) {
       if (err) {
-        grunt.log.error(e);
+        grunt.log.error(err);
         grunt.fail.warn('Stylus failed to compile.');
       } else {
         callback(output.stdout);
