@@ -30,12 +30,23 @@ grunt.initConfig({
   }
 });
 ```
+### Options
+
+#### htmlcompressor options
+
+Options can be whatever `htmlcompressor accepts`
+
+#### input/output files
+
+`src` can be a string or a function
+`processName` can help you formating the output instead of using `dest`
 
 [grunt]: https://github.com/cowboy/grunt
 [getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
 [htmlcompressor]: http://code.google.com/p/htmlcompressor/
 
 ## Release History
+* 0.1.0 Dynamic input (`src` parameter can be a function) and output (`processName`) files
 * 0.0.1 First Release
 
 ## License

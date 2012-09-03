@@ -26,22 +26,25 @@ module.exports = function(grunt) {
     this.files = this.files || grunt.helper('normalizeMultiTaskFiles', this.data, this.target);
 
     var done = this.async();
-
+    var processName = options.processName;
     var srcFiles;
     var sourceCode;
 
+    delete options.processName;
+
     async.forEachSeries(this.files, function(file, next) {
-      srcFiles = grunt.file.expandFiles(file.src);
-      //options.output = file.dest;
+      var src = _.isFunction(file.src) ? file.src() : file.src;
+      srcFiles = grunt.file.expandFiles(src);
 
       async.concatSeries(srcFiles, function(srcFile, nextConcat) {
         grunt.helper('htmlcompressor', srcFile, options, function(html) {
-          nextConcat(html);
+          nextConcat(srcFile, html);
         });
-      }, function(html) {
-        grunt.file.write(file.dest, html);
-        grunt.log.writeln('File \'' + file.dest + '\' created.');
-
+      }, function(srcFile, html) {
+        var dest = _.isFunction(processName) ?
+          processName(srcFile, html) : file.dest;
+        grunt.file.write(dest, html);
+        grunt.log.writeln('File "' + dest + '" created.');
         next();
       });
     }, function() {
@@ -59,7 +62,7 @@ module.exports = function(grunt) {
     }, function(err, output) {
       if (err) {
         grunt.log.error(err);
-        grunt.fail.warn('Stylus failed to compile.');
+        grunt.fail.warn('htmlcompressor failed to compress html.');
       } else {
         callback(output.stdout);
       }
