@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-/*global _:true */
+/*global _:true, __dirname */
 
 module.exports = function(grunt) {
   'use strict';
