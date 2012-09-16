@@ -15,7 +15,6 @@ module.exports = function(grunt) {
   grunt.util = grunt.util || grunt.utils;
 
   var _ = grunt.util._;
-  var async = grunt.util.async;
 
   grunt.registerMultiTask('htmlcompressor', 'Compress html files', function() {
     var options = grunt.helper('options', this);
@@ -27,28 +26,21 @@ module.exports = function(grunt) {
 
     var done = this.async();
     var processName = options.processName;
-    var srcFiles;
-    var sourceCode;
 
     delete options.processName;
 
-    async.forEachSeries(this.files, function(file, next) {
+    this.files.forEach(function(file) {
       var src = _.isFunction(file.src) ? file.src() : file.src;
-      srcFiles = grunt.file.expandFiles(src);
+      var srcFiles = grunt.file.expandFiles(src);
 
-      async.concatSeries(srcFiles, function(srcFile, nextConcat) {
+      srcFiles.forEach(function(srcFile) {
         grunt.helper('htmlcompressor', srcFile, options, function(html) {
-          nextConcat(srcFile, html);
+          var dest = _.isFunction(processName) ?
+            processName(srcFile, html) : file.dest;
+          grunt.file.write(dest, html);
+          grunt.log.writeln('File "' + dest + '" created.');
         });
-      }, function(srcFile, html) {
-        var dest = _.isFunction(processName) ?
-          processName(srcFile, html) : file.dest;
-        grunt.file.write(dest, html);
-        grunt.log.writeln('File "' + dest + '" created.');
-        next();
       });
-    }, function() {
-      done();
     });
   });
 

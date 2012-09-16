@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     },
 
     test: {
-      tasks: ["*_test.js"],
+      tasks: ["*_test.js"]
     },
 
     clean: {
@@ -22,12 +22,14 @@ module.exports = function(grunt) {
     },
 
     htmlcompressor: {
-      compile: {
-        files: {
-          'fixtures/output/index.html': 'fixtures/html/index.html'
-        },
+      compress: {
+        src: 'fixtures/html/*.html',
         options: {
           type: 'html',
+          processName: function (path) {
+            path = path.split('/').pop();
+            return 'fixtures/output/' + path;
+          },
           preserveServerScript: true
         }
       }
