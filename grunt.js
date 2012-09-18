@@ -2,10 +2,6 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    htmlcompressor: {
-      valid: "test/valid.html",
-      invalid: "test/*.html"
-    },
     test: {
       files: ['test/**/*.js']
     },
