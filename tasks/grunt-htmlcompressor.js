@@ -29,39 +29,43 @@ module.exports = function(grunt) {
 
     delete options.processName;
 
-    async.forEachSeries(files, function(file) {
+    async.forEach(files, function(file, next) {
       var src = _.isFunction(file.src) ? file.src() : file.src;
       var srcFiles = grunt.file.expandFiles(src);
 
-      srcFiles.forEach(function(srcFile) {
-        grunt.helper('htmlcompressor', srcFile, options, function(html) {
-          var dest = _.isFunction(processName) ?
-            processName(srcFile, html) : file.dest;
-          grunt.file.write(dest, html);
-          grunt.log.writeln('File "' + dest + '" created.');
-        }, done);
-      });
-    }, done);
+      async.forEach(srcFiles, function(srcFile, nextF) {
 
+        grunt.helper('htmlcompressor', srcFile, options, function(err, html) {
+          if (err) {
+            nextF(err);
+          } else {
+            var dest = _.isFunction(processName) ?
+              processName(srcFile, html) : file.dest;
+            grunt.file.write(dest, html);
+            grunt.log.writeln('File "' + dest + '" created.');
+            nextF();
+          }
+        });
+      }, next);
+    }, done);
   });
 
-  grunt.registerHelper('htmlcompressor', function(inputFile, opts, callback, done) {
-    done = done || noop;
+  grunt.registerHelper('htmlcompressor', function(srcFile, options, callback) {
     var jar = __dirname + '/../ext/htmlcompressor-1.5.3.jar';
-    var args = _.flatten(['-jar', jar, _.map(opts, toParameter), inputFile]);
+    var args = _.flatten(['-jar', jar, _.map(options, toParameter), srcFile]);
 
     grunt.util.spawn({
       cmd: 'java',
       args: args
     }, function(err, output, code) {
-      if (err) {
-        grunt.log.error(err);
-        grunt.fail.warn('htmlcompressor failed to compress html.');
-        done(false);
-      } else {
-        callback(output.stdout);
-      }
-    });
+         if (err) {
+           grunt.log.error(err);
+           grunt.fail.warn('htmlcompressor failed to compress html.');
+           callback(err);
+         } else {
+           callback(null, output.stdout);
+         }
+       });
   });
 
   // Convert a pair of key/value to an array
@@ -76,8 +80,8 @@ module.exports = function(grunt) {
   //   // => ['--preserve-comments']
   function toParameter(val, key) {
     var str = '--' + key.replace(/([A-Z])/g, function(a) {
-      return '-' +  a.toLowerCase();
-    });
+                       return '-' +  a.toLowerCase();
+                     });
 
     return (val === true) ? [str] : [str, val];
   }

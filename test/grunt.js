@@ -6,7 +6,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: {
       name: 'grunt-htmlcompressor',
-      version: '0.1.3'
+      version: '0.1.4'
     },
 
     files: {
@@ -23,7 +23,9 @@ module.exports = function(grunt) {
 
     htmlcompressor: {
       compress: {
-        src: 'fixtures/html/*.html',
+        src: [
+          'fixtures/html/*.html'
+        ],
         options: {
           type: 'html',
           processName: function (path) {

@@ -46,6 +46,7 @@ Options can be whatever `htmlcompressor accepts`
 [htmlcompressor]: http://code.google.com/p/htmlcompressor/
 
 ## Release History
+* 0.1.4 Async fixing
 * 0.1.0 Dynamic input (`src` parameter can be a function) and output (`processName`) files
 * 0.0.1 First Release
 
