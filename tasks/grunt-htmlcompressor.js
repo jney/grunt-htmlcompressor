@@ -11,18 +11,13 @@
 module.exports = function(grunt) {
   'use strict';
 
-  // TODO: ditch this when grunt v0.4 is released
-  grunt.util = grunt.util || grunt.utils;
-
   var _ = grunt.util._;
 
   grunt.registerMultiTask('htmlcompressor', 'Compress html files', function() {
-    var options = grunt.helper('options', this);
+    var options = this.options();
 
     grunt.verbose.writeflags(options, 'Options');
 
-    // TODO: ditch this when grunt v0.4 is released
-    var files = this.files || grunt.helper('normalizeMultiTaskFiles', this.data, this.target);
     var async = grunt.util.async;
     var done = this.async();
     var jar = __dirname + '/../ext/htmlcompressor-1.5.3.jar';
@@ -30,7 +25,7 @@ module.exports = function(grunt) {
 
     delete options.processName;
 
-    async.forEach(files, function(file, next) {
+    async.forEach(this.files, function(file, next) {
       var src = _.isFunction(file.src) ? file.src() : file.src;
       var srcFiles = grunt.file.expandFiles(src);
 
