@@ -25,6 +25,7 @@ module.exports = function(grunt) {
     var files = this.files || grunt.helper('normalizeMultiTaskFiles', this.data, this.target);
     var async = grunt.util.async;
     var done = this.async();
+    var jar = __dirname + '/../ext/htmlcompressor-1.5.3.jar';
     var processName = options.processName;
 
     delete options.processName;
@@ -35,10 +36,19 @@ module.exports = function(grunt) {
 
       async.forEach(srcFiles, function(srcFile, nextF) {
 
-        grunt.helper('htmlcompressor', srcFile, options, function(err, html) {
+        var args = _.flatten(['-jar', jar, _.map(options, toParameter), srcFile]);
+
+        grunt.util.spawn({
+          cmd: 'java',
+          args: args
+        }, function(err, output, code) {
           if (err) {
+            grunt.log.error();
+            grunt.verbose.error(err);
+            grunt.fail.warn('htmlcompressor failed to compress html.');
             nextF(err);
           } else {
+            var html = output.stdout;
             var dest = _.isFunction(processName) ?
               processName(srcFile, html) : file.dest;
             grunt.file.write(dest, html);
@@ -48,24 +58,6 @@ module.exports = function(grunt) {
         });
       }, next);
     }, done);
-  });
-
-  grunt.registerHelper('htmlcompressor', function(srcFile, options, callback) {
-    var jar = __dirname + '/../ext/htmlcompressor-1.5.3.jar';
-    var args = _.flatten(['-jar', jar, _.map(options, toParameter), srcFile]);
-
-    grunt.util.spawn({
-      cmd: 'java',
-      args: args
-    }, function(err, output, code) {
-         if (err) {
-           grunt.log.error(err);
-           grunt.fail.warn('htmlcompressor failed to compress html.');
-           callback(err);
-         } else {
-           callback(null, output.stdout);
-         }
-       });
   });
 
   // Convert a pair of key/value to an array
@@ -85,6 +77,4 @@ module.exports = function(grunt) {
 
     return (val === true) ? [str] : [str, val];
   }
-
-  function noop () {}
 };
