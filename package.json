@@ -1,7 +1,7 @@
 {
   "name": "grunt-htmlcompressor",
   "description": "compress html with grunt and htmlcompressor",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "homepage": "https://github.com/jney/grunt-htmlcompressor",
   "author": {
     "name": "Jean-Sébastien Ney",
@@ -29,11 +29,10 @@
     "test": "grunt"
   },
   "dependencies": {
-    "grunt": "~0.4.0a"
+    "grunt": "~0.4.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.0a",
-    "grunt-contrib-clean": "~0.4.0a",
+    "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-nodeunit": "*"
   },
