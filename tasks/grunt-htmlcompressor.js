@@ -23,6 +23,9 @@ module.exports = function(grunt) {
     var jar = __dirname + '/../ext/htmlcompressor-1.5.3.jar';
     var processName = options.processName;
 
+    // https://github.com/jney/grunt-htmlcompressor/issues/9
+    this.files = this.files || [this.file];
+
     delete options.processName;
 
     async.forEach(this.files, function(file, next) {
