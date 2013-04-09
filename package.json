@@ -29,13 +29,13 @@
     "test": "grunt"
   },
   "dependencies": {
-    "grunt": "~0.4.0"
+    "grunt": "~0.4.1"
   },
   "devDependencies": {
     "grunt-cli": "*",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-jshint": "0.1.1rc5",
-    "grunt-contrib-nodeunit": "*"
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-nodeunit": "~0.1.2"
   },
   "keywords": [
     "gruntplugin"
