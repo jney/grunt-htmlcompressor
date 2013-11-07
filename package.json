@@ -29,7 +29,8 @@
     "test": "grunt"
   },
   "dependencies": {
-    "grunt": "~0.4.0"
+    "grunt": "~0.4.0",
+    "lodash": "~2.2.1"
   },
   "devDependencies": {
     "grunt-cli": "*",
