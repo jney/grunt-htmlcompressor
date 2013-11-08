@@ -37,8 +37,7 @@ module.exports = function(grunt) {
           args: args
         }, function(err, output, code) {
           if (err) {
-            grunt.log.error();
-            grunt.verbose.error(err);
+            grunt.log.error(err);
             grunt.fail.warn('htmlcompressor failed to compress html.');
             done(err);
           } else {
