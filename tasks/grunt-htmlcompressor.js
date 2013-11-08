@@ -59,6 +59,8 @@ module.exports = function(grunt) {
     };
 
     this.files.forEach(function(file) {
+      var src;
+
       if (_.isFunction(file.src)) {
         src = file.src();
         src.forEach(function(inFile){
