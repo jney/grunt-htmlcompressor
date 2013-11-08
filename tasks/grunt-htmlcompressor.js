@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     var done = this.async();
     var jar = __dirname + '/../ext/htmlcompressor-1.5.3.jar';
     var processName = options.processName;
-    var concurrent = parseInt(options.concurrentProcess, 10) > 0 ? options.concurrentProcess : 10;
+    var concurrent = parseInt(options.concurrentProcess, 10) > 0 ? options.concurrentProcess : 50;
     var running = 0;
     var srcFiles = [];
 
