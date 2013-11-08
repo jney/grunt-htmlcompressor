@@ -7,6 +7,7 @@
  */
 
 /*global _:true, __dirname */
+var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
   'use strict';
@@ -31,22 +32,22 @@ module.exports = function(grunt) {
 
       async.forEach(srcFiles, function(srcFile, nextF) {
 
-        var args = _.flatten(['-jar', jar, _.map(options, toParameter), srcFile]);
-
-        grunt.util.spawn({
-          cmd: 'java',
-          args: args
-        }, function(err, output, code) {
+        var args = _.flatten(['java', '-jar', jar, _.map(options, toParameter), srcFile]);
+        var dest = _.isFunction(processName) ?
+          processName(srcFile, html) : file.dest;
+        args.push('>');
+        args.push(dest);
+        exec(args.join(' '), function(err, output, code) {
           if (err) {
             grunt.log.error();
             grunt.verbose.error(err);
             grunt.fail.warn('htmlcompressor failed to compress html.');
             nextF(err);
           } else {
-            var html = output.stdout;
-            var dest = _.isFunction(processName) ?
-              processName(srcFile, html) : file.dest;
-            grunt.file.write(dest, html);
+            // var html = output.stdout;
+            // var dest = _.isFunction(processName) ?
+            //   processName(srcFile, html) : file.dest;
+            // grunt.file.write(dest, html);
             grunt.log.writeln('File "' + dest + '" created.');
             nextF();
           }
