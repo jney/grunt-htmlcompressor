@@ -66,7 +66,9 @@ module.exports = function(grunt) {
           srcFiles.push({src: inFile, dest: file.dest});
         });
       } else {
-        srcFiles.push(file);
+        file.src.forEach(function(inFile){
+          srcFiles.push({src: inFile, dest: file.dest});
+        });
       }
     });
     for (var p = 0; p <= concurrent; p++) {
