@@ -26,6 +26,7 @@ module.exports = function(grunt) {
     var srcFiles = [];
 
     delete options.processName;
+    delete options.concurrentProcess;
 
     var compress = function (done) {
       if (srcFiles.length > 0) {
